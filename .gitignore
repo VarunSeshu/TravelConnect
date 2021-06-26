@@ -25,7 +25,6 @@ mysqldb
 
 # Environment files
 !.env.sample
-.env
 .env.*
 
 # Don't ignore lib inside src
