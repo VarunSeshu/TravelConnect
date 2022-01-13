@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "khunti-bazaar-backend"
+name = "khunti-baazar-backend"
 version = "1.0.0"
 description = "backend service for khunti-baazar app"
 authors = ["Sulabh Tiwary"]
