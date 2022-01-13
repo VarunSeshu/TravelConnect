@@ -1,7 +1,7 @@
 from ast import In
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
 from sqlalchemy.sql.expression import func
-from sqlalchemy.dialects.mysql import INTEGER, Enum
+from sqlalchemy.dialects.mysql import INTEGER
 from .products import Products
 from .orders import Orders
 from . import Base

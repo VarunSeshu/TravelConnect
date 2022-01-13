@@ -1,6 +1,6 @@
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String, Enum
 from sqlalchemy.sql.expression import func
-from sqlalchemy.dialects.mysql import INTEGER, Enum
+from sqlalchemy.dialects.mysql import INTEGER
 from .customers import Customers
 from .stores import Stores
 from src.config.enums import OrderStatus
