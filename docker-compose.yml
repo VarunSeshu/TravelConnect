@@ -1,35 +1,30 @@
 version: '3.5'
 
 services:
-  dynamodb-local:
-    command: "-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
-    image: "amazon/dynamodb-local:latest"
-    container_name: dynamodb-local
-    ports:
-      - "8000:8000"
-    volumes:
-      - "./docker/dynamodb:/home/dynamodblocal/data"
-    working_dir: /home/dynamodblocal
-
-  backend_service:
-    env_file:
-      - ./.env
+  # backend_service:
+  #   env_file:
+  #     - ./.env
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   command: 
+  #   # - sh /usr/src/backend/start.sh
+  #   - /usr/src/backend/.venv/bin/uvicorn src:app --host 0.0.0.0 --port 80 --reload --log-level info > server_uvicorn.log
+  #   ports:
+  #     - 80:80
+  #   volumes:
+  #     - .:/usr/src/backend
+  #   restart: on-failure
+  db:
     build:
-      context: .
-      dockerfile: ./Dockerfile
+        context: .
+        dockerfile: ./db/Dockerfile
+    command : --default-authentication-plugin=mysql_native_password
     ports:
-      - 5000:5000
+      - 3356:3306
     volumes:
-      - .:/usr/src/backend:cached
-    restart: on-failure
-    depends_on:
-      - "dynamodb-local"
-    links:
-      - "dynamodb-local"
+      - ./db/mysqldb:/var/lib/mysql
     environment:
-      AWS_ACCESS_KEY_ID: 'DUMMYIDEXAMPLE'
-      AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
-      REGION: 'eu-west-1'
-
-
-      
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+          
