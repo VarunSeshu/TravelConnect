@@ -19,8 +19,19 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 
 ### IMPORT YOUR MODELS FOR TABLES TO BE CREATED
-from src.models import model
-from src.models import model2
+from src.models import business_categories
+from src.models import customers
+from src.models import stores
+from src.models import product_categories
+from src.models import products
+from src.models import owners
+from src.models import product_business_map
+
+# from src.models import product_details1
+# from  src.models import orders2
+# from src.models import order_details3
+
+
 from src.models import Base
 
 target_metadata = Base.metadata
