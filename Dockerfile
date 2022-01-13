@@ -1,21 +1,18 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+FROM public.ecr.aws/i7t6p8u9/ubuntu-20.04-python3.8:latest
 RUN apt-get update
-# Install base python dependencies
-# RUN apt-get install build-essential libssl-dev libffi-dev -y
-RUN python -m pip install --upgrade pip==20.2.4\
-    && pip install awscli
+
+RUN pip install --upgrade pip \
+  && pip install awscli
 RUN echo "export PS1='\[\e[38;5;202m\]\[\e[38;5;245m\]\u\[\e[00m\]@\[\e[38;5;172m\]backend[C]\[\e[00m\]:\[\e[38;5;5m\]\W\[\e[00m\]\\$ '" >> ~/.bashrc
-RUN apt-get install vim curl -y
-RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.8.12-amd64.deb && dpkg -i ./filebeat-6.8.12-amd64.deb
-COPY ./docker/filebeat.yml /etc/filebeat/filebeat.yml
-RUN chmod go-w /etc/filebeat/filebeat.yml
-# Copy python dependencies file
-ADD requirements.txt ./
-# Install python packages
-#RUN pipenv install --deploy --ignore-pipfile --dev --system
-# Copy source code
-RUN pip install -r requirements.txt
+# RUN apt-get install vim curl -y
+RUN pip install poetry
+
 COPY ./ /usr/src/backend
 WORKDIR /usr/src/backend
-EXPOSE 5000
-CMD [ "sh", "/usr/src/backend/start.sh" ]
+
+RUN poetry install
+EXPOSE 80
+
+# CMD [ ".venv/bin/hypercorn", "src.main:app", "--bind", "0.0.0.0:80" ]
+RUN chmod +x /usr/src/backend/start.sh
+ENTRYPOINT ["/usr/src/backend/start.sh"]

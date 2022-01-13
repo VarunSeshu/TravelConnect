@@ -1,24 +1,30 @@
 # Backend Template
-Template build on top of fastapi , dynamodb.
+Template build on top of fastapi , mysql.
 ```
-This includes logging and sentry setup also.
-
-local Dynamodb  is used for devlopment.
-```
-# Running on Docker
+This project uses poetry as the dependency manager, alembic as migration manager and sqlAlchemy for Db interactions. 
 
 ```
-docker-compose up
-command to go inside backend container: 
-docker exec -it backend-template_backend_service_1 bash
-```
+# Steps to run
 
+```
+1. docker-compose up #This will start up mysql8 which will be mapped to 3356 port of host machine.
+2. pip install poetry 
+3. poetry install
+4. poetry shell      # This will start virual env. All the libraries are present inside this folder and hence all 
+commands needs to be run from inside.
+5. alembic upgrade head  #This will create the tables.
+6. python -m server.py
+
+RUN below command inside vitual env to format the code:
+black .
+
+```
+# one command to run db migrations and start server:
+```
+sh start.sh    
+
+```
 # Additional info :
 ```
-dynamodb runs on port 8000
-Fastapi runs on port 5000
-```
-# Dynamodb usage example using awscli:
-```
-aws dynamodb list-tables  --endpoint-url http://dynamodb-local:8000 --region us-west-2
+Fastapi runs on port 80
 ```

@@ -1,13 +1,13 @@
 import uuid
 
-import requests
-import sentry_sdk
+# import sentry_sdk
 from fastapi import Request
 
 from ...config import env
 from ...lib.api_response import send_response
 from ...lib.logging.logger import add_param, initialize
-from ...lib.sentry import send_sentry_event
+
+# from ...lib.sentry import send_sentry_event
 
 
 class BackendMiddleware:
@@ -54,7 +54,7 @@ class BackendMiddleware:
 
             print("Exception in backend", traceback.format_exc())
             log.error("Exception in backend", exc_info=True)
-            send_sentry_event(e, request)
+            # send_sentry_event(e, request)
             return self.send_response(dict(detail="Something went wrong"), 500)
 
     def get_origin(self, request: Request):
