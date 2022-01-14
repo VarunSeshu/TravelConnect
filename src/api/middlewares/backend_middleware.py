@@ -1,19 +1,17 @@
 import uuid
 
-# import sentry_sdk
-from fastapi import Request
+from fastapi import Request, Depends
 
-from ...config import env
 from ...lib.api_response import send_response
 from ...lib.logging.logger import add_param, initialize
-
-# from ...lib.sentry import send_sentry_event
+from fastapi_jwt_auth import AuthJWT
+from src.api.middlewares.auth import Authorize
 
 
 class BackendMiddleware:
     routes = {
         "ignored_routes": [],
-        "idless_routes": [],
+        "login_routes": ["login"],
         "doc_routes": ["docs", "openapi.json"],
     }
 
@@ -21,12 +19,13 @@ class BackendMiddleware:
         routes = self.routes
         return (
             path in routes["ignored_routes"]
-            or (part in routes["idless_routes"] and path == "api")
+            or (part in routes["login_routes"])
             or part in routes["doc_routes"]
         )
 
     async def __call__(self, request: Request, call_next):
         self.get_origin(request)
+        routes = self.routes
         if "OPTIONS" in request.__dict__["scope"]["method"]:
             return await call_next(request)
 
@@ -39,13 +38,19 @@ class BackendMiddleware:
         full_path = request.__dict__["scope"]["path"].split("/")
         part = full_path[-1]
         path = full_path[-2]
-
         try:
-            if self.is_tokenless_route(path, part):
+            if path in routes["login_routes"]:
+                response = await call_next(request)
+                log.info(f"Response status : {response.status_code}")
+                return response
+            elif self.is_tokenless_route(path, part):
                 response = await call_next(request)
                 log.info(f"Tokenless Route: Response status {response.status_code}")
                 return response
-
+            auth = Authorize(request)
+            auth.authorize()
+            user_id = auth.get_user_id_from_jwt()
+            request.state.user_id = user_id
             response = await call_next(request)
             log.info(f"Response status : {response.status_code}")
             return response
@@ -54,8 +59,12 @@ class BackendMiddleware:
 
             print("Exception in backend", traceback.format_exc())
             log.error("Exception in backend", exc_info=True)
-            # send_sentry_event(e, request)
-            return self.send_response(dict(detail="Something went wrong"), 500)
+            return self.send_response(
+                dict(
+                    detail=f"Something went wrong {e}",
+                ),
+                500,
+            )
 
     def get_origin(self, request: Request):
         request_origin = ""
@@ -68,3 +77,8 @@ class BackendMiddleware:
     # Method to append CORS headers via request_origin before sending response
     def send_response(self, content, code):
         return send_response(dict(detail=content), code, self.request_origin)
+
+    def access(Authorize: AuthJWT = Depends()):
+        access_token = Authorize.create_access_token(subject="abcd")
+        print(access_token)
+        return access_token

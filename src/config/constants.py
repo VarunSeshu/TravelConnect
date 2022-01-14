@@ -18,3 +18,7 @@ class UNITS(BaseEnum):
     KG = "kg"
     GRAM = "gram"
     NUMBER = "number"
+
+
+class TOKEN:
+    expire_time_in_days = 30

@@ -9,8 +9,8 @@ def send_response(content, status_code=200, origin=""):
         "access-control-allow-credentials": "true",
     }
 
-    if origin in env.ALLOWED_CORS_ORIGINS.split(","):
-        headers["access-control-allow-origin"] = origin
+    # if origin in env.ALLOWED_CORS_ORIGINS.split(","):
+    #     headers["access-control-allow-origin"] = origin
 
     return JSONResponse(
         content=content,

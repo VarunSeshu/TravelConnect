@@ -10,10 +10,7 @@ user_extras = {}
 
 def initialize():
     formatter = CustomisedJSONFormatter()
-    log_file = (
-        os.getenv("LOGS_DIR", "/usr/src/backend/logs").replace('"', "")
-        + "/json_backend.log"
-    )
+    log_file = os.getenv("LOGS_DIR", "logs").replace('"', "") + "/json_backend.log"
     json_handler = handlers.TimedRotatingFileHandler(
         log_file, when="D", interval=1, backupCount=3
     )
