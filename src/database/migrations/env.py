@@ -30,6 +30,7 @@ from src.models import orders
 from src.models import order_details
 from src.models import product_details
 from src.models import users
+from src.models import user_role
 
 
 from src.models import Base

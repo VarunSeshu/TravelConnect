@@ -1,7 +1,5 @@
 import os
 
-from src.api.middlewares.auth import JWTSecret
-
 # APP_ENV = os.getenv("APP_ENV")
 # APP_DEBUG = os.getenv("APP_DEBUG") in ["true", "True"]
 # LOG_LEVEL = os.getenv("LOG_LEVEL", "DEBUG")

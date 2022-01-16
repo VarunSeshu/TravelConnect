@@ -1,4 +1,4 @@
-from .constants import STATUSES, UNITS
+from .constants import STATUSES, UNITS, ROLES
 from enum import Enum
 
 
@@ -13,3 +13,8 @@ class Units(str, Enum):
     kg = UNITS.KG.value
     gram = UNITS.GRAM.value
     number = UNITS.NUMBER.value
+
+
+class Roles(str, Enum):
+    owner = ROLES.OWNER.value
+    customer = ROLES.OWNER.value

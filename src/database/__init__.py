@@ -1,3 +1,3 @@
-from .db import session
+from .db import db_session
 
-__all__ = ["session"]
+__all__ = ["db_session"]

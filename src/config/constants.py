@@ -22,3 +22,8 @@ class UNITS(BaseEnum):
 
 class TOKEN:
     expire_time_in_days = 30
+
+
+class ROLES(BaseEnum):
+    OWNER = "owner"
+    CUSTOMER = "customer"

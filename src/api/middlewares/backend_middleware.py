@@ -5,13 +5,13 @@ from fastapi import Request, Depends
 from ...lib.api_response import send_response
 from ...lib.logging.logger import add_param, initialize
 from fastapi_jwt_auth import AuthJWT
-from src.api.middlewares.auth import Authorize
+from src.modules.authentication import Authorize
 
 
 class BackendMiddleware:
     routes = {
         "ignored_routes": [],
-        "login_routes": ["login"],
+        "login_routes": ["login", "send_otp", "verify_otp"],
         "doc_routes": ["docs", "openapi.json"],
     }
 
@@ -77,8 +77,3 @@ class BackendMiddleware:
     # Method to append CORS headers via request_origin before sending response
     def send_response(self, content, code):
         return send_response(dict(detail=content), code, self.request_origin)
-
-    def access(Authorize: AuthJWT = Depends()):
-        access_token = Authorize.create_access_token(subject="abcd")
-        print(access_token)
-        return access_token

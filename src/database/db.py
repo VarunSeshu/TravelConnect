@@ -49,6 +49,6 @@ def get_db():
     )
 
 
-def session():
+def db_session():
     session, engine = get_db()
     return session
