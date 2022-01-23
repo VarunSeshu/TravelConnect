@@ -109,6 +109,19 @@ python-versions = ">=3.6"
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "cloudinary"
+version = "1.28.1"
+description = "Python and Django SDK for Cloudinary"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+certifi = "*"
+six = "*"
+urllib3 = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
@@ -588,7 +601,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "882ecbae33a4aea10315a24e70f8b5c7af7f402ec62124482db1288af22179e2"
+content-hash = "c11c0457969e533f2a5d9a501550fe161c21ab76888a53b9e5b99421e981bc13"
 
 [metadata.files]
 alembic = [
@@ -626,6 +639,9 @@ charset-normalizer = [
 click = [
     {file = "click-8.0.3-py3-none-any.whl", hash = "sha256:353f466495adaeb40b6b5f592f9f91cb22372351c84caeb068132442a4518ef3"},
     {file = "click-8.0.3.tar.gz", hash = "sha256:410e932b050f5eed773c4cda94de75971c89cdb3155a72a0831139a79e5ecb5b"},
+]
+cloudinary = [
+    {file = "cloudinary-1.28.1.tar.gz", hash = "sha256:632203a323da03c1be84dfb092fb30d2844e48a3a2f39077724ccb60daceea58"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},

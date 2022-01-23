@@ -1,4 +1,3 @@
-from curses.ascii import US
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
 from sqlalchemy.sql.expression import func
 from .stores import Stores

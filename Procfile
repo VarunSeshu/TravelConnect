@@ -1,0 +1,1 @@
+web: .venv/bin/uvicorn src:app  --reload --log-level info > server_uvicorn.log
