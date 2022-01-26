@@ -6,9 +6,10 @@ from .products import Products
 from .orders import Orders
 from src.config.enums import Units
 from . import Base
+from .parent_model import ParentModel
 
 
-class ProductDetails(Base):
+class ProductDetails(Base, ParentModel):
 
     __tablename__ = "product_details"
 

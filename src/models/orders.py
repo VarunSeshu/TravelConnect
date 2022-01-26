@@ -5,9 +5,10 @@ from .customers import Customers
 from .stores import Stores
 from src.config.enums import OrderStatus
 from . import Base
+from .parent_model import ParentModel
 
 
-class Orders(Base):
+class Orders(Base, ParentModel):
 
     __tablename__ = "orders"
 

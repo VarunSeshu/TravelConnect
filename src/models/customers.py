@@ -2,9 +2,10 @@ from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
 from sqlalchemy.sql.expression import func
 from .users import Users
 from . import Base
+from .parent_model import ParentModel
 
 
-class Customers(Base):
+class Customers(Base, ParentModel):
 
     __tablename__ = "customers"
 

@@ -2,12 +2,12 @@ from sqlalchemy import BigInteger, Column, DateTime, ForeignKey
 from sqlalchemy.sql.expression import func
 from .product_categories import ProductCategories
 from .business_categories import BusinessCategories
-
+from .parent_model import ParentModel
 
 from . import Base
 
 
-class ProductBusinessMap(Base):
+class ProductBusinessMap(Base, ParentModel):
 
     __tablename__ = "product_business_map"
 

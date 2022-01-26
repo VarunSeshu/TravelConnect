@@ -34,7 +34,7 @@ def create_db_conn(db_uri):
     session_maker = sessionmaker(autocommit=True, bind=engine)
     session = scoped_session(session_maker)
 
-    return session, engine
+    return session, session_maker
 
 
 def get_db():
@@ -50,5 +50,10 @@ def get_db():
 
 
 def db_session():
-    session, engine = get_db()
+    session, session_maker = get_db()
     return session
+
+
+def db_session_maker():
+    session, session_maker = get_db()
+    return session_maker

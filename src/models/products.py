@@ -3,11 +3,11 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.dialects.mysql import TINYINT
 from .product_categories import ProductCategories
 from .stores import Stores
-
+from .parent_model import ParentModel
 from . import Base
 
 
-class Products(Base):
+class Products(Base, ParentModel):
 
     __tablename__ = "products"
 
@@ -16,6 +16,7 @@ class Products(Base):
     product_category_id = Column(
         BigInteger, ForeignKey(ProductCategories.id), nullable=False
     )
+    brand = Column(String(255))
     store_id = Column(BigInteger, ForeignKey(Stores.id), nullable=False)
     image = Column(String(500))
     description = Column(String(500))

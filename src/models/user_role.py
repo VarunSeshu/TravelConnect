@@ -3,9 +3,10 @@ from sqlalchemy.sql.expression import func
 from .users import Users
 from src.config.enums import Roles
 from . import Base
+from .parent_model import ParentModel
 
 
-class UserRole(Base):
+class UserRole(Base, ParentModel):
 
     __tablename__ = "user_role"
 

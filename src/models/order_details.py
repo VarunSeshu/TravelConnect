@@ -5,9 +5,10 @@ from sqlalchemy.dialects.mysql import INTEGER
 from .products import Products
 from .orders import Orders
 from . import Base
+from .parent_model import ParentModel
 
 
-class OrderDetails(Base):
+class OrderDetails(Base, ParentModel):
 
     __tablename__ = "order_details"
 

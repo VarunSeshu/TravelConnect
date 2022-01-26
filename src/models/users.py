@@ -1,10 +1,10 @@
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
 from sqlalchemy.sql.expression import func
-
+from .parent_model import ParentModel
 from . import Base
 
 
-class Users(Base):
+class Users(Base, ParentModel):
 
     __tablename__ = "users"
 

@@ -3,9 +3,10 @@ from sqlalchemy.sql.expression import func
 from .stores import Stores
 from .users import Users
 from . import Base
+from .parent_model import ParentModel
 
 
-class Owners(Base):
+class Owners(Base, ParentModel):
 
     __tablename__ = "owners"
 

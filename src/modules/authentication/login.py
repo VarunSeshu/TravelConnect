@@ -1,6 +1,7 @@
 from fastapi_jwt_auth import AuthJWT
 import datetime
 from src.config.constants import TOKEN
+from src.database.db_repository import DbRepositories
 
 
 class Login:
@@ -14,7 +15,9 @@ class Login:
 
     def verify_user_exists(self):
         # TODO: check user exists in DB here.
-        if self.user_id in [1, 2, 3, 4, 5]:
+        db_repo = DbRepositories(self.user_id)
+        user = db_repo.get_main_user()
+        if user:
             return True
         return False
 

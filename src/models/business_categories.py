@@ -1,11 +1,11 @@
 from sqlalchemy import BigInteger, Column, DateTime, String
 from sqlalchemy.sql.expression import func
-
+from .parent_model import ParentModel
 
 from . import Base
 
 
-class BusinessCategories(Base):
+class BusinessCategories(Base, ParentModel):
 
     __tablename__ = "business_categories"
 
