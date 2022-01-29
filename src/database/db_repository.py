@@ -1,6 +1,6 @@
+from ast import Store
 from black import re
 from pytest_mock import session_mocker
-from src.models import owners
 from src.models.users import Users
 from src.models.customers import Customers
 from src.models.owners import Owners
@@ -50,7 +50,7 @@ class DbRepositories:
             )
             db_session.add(store)
             db_session.flush()
-            logger.info(f"Created new customer {store}")
+            logger.info(f"Created new Store {store}")
         return store
 
     def get_business_category(self, category_name):
@@ -67,18 +67,50 @@ class DbRepositories:
         return owner
 
     def create_new_product(self, request):
-        product = db_session.query(Products).filter(func.lower(Products.name) == func.lower(request.product_name), Products.store_id == request.store_id).first()
+        product = (
+            db_session.query(Products)
+            .filter(
+                func.lower(Products.name) == func.lower(request.product_name),
+                Products.store_id == request.store_id,
+            )
+            .first()
+        )
         if product:
             logger.info(f"The product already exists with name {request.product_name}")
             raise Exception("Product already exists")
-        product = Products(name=request.product_name, brand=request.product_brand, description=request.product_description, store_id = request.store_id)
+        product = Products(
+            name=request.product_name,
+            brand=request.product_brand,
+            description=request.product_description,
+            store_id=request.store_id,
+        )
         db_session.add(product)
         db_session.flush()
         return product
-    
+
     def add_product_details(self, request, product_id):
         for details in request.product_details:
-            product_details = ProductDetails(product_id = product_id, unit = details.unit, actual_price= details.mrp_price,discounted_price= details.discounted_price, quantity = details.quantity)
+            product_details = ProductDetails(
+                product_id=product_id,
+                unit=details.unit,
+                actual_price=details.mrp_price,
+                discounted_price=details.discounted_price,
+                quantity=details.quantity,
+            )
             db_session.add(product_details)
             db_session.flush()
         return True
+
+    def delete_customer(self):
+        Customers.delete({"user_id": self.user_id})
+
+    def delete_store(self):
+        owner = Owners.get({"user_id": self.user_id}).first()
+        if owner:
+            Stores.delete({"id": owner.store_id})
+
+    def delete_owner(self):
+        Owners.delete({"user_id": self.user_id})
+
+    def delete_user(self):
+        Users.delete({"id": self.user_id})

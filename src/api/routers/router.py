@@ -16,7 +16,8 @@ from src.modules.api_manager import (
     send_otp_to_user,
     verify_otp_and_return_user_and_token,
     update_user_details,
-    add_new_product
+    add_new_product,
+    delete_user_and_properties,
 )
 
 os.path.join(os.getcwd(), "src")
@@ -59,6 +60,12 @@ def update_user(request: UpdateUserRequest, auth_request: Request):
     user_id = auth_request.state.user_id
     print(f"This is the user_id {user_id}")
     return update_user_details(request, user_id)
+
+
+@router.delete("/delete_user/{user_id}")
+def delete_user(user_id: int):
+    log.info(f"delete_user API request : {jsonable_encoder(user_id)}")
+    delete_user_and_properties(user_id)
 
 
 @router.post("/add_product")

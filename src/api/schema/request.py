@@ -30,7 +30,6 @@ class ProductDetailsRequest(BaseModel):
     quantity: str = Field(..., title="quantity of the product")
     mrp_price: str = Field(..., title="mrp of the product")
     discounted_price: str = Field(..., title="discounted_price of the product")
-    
 
 
 class AddProductRequest(BaseModel):

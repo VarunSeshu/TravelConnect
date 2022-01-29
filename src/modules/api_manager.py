@@ -68,4 +68,12 @@ def add_new_product(request, user_id):
     db_repositories = DbRepositories(user_id)
     product = db_repositories.create_new_product(request)
     db_repositories.add_product_details(request, product.id)
-    
+
+
+def delete_user_and_properties(user_id):
+    db_repositories = DbRepositories(user_id)
+    db_repositories.delete_customer()
+    db_repositories.delete_store()
+    db_repositories.delete_owner()
+    db_repositories.delete_user()
+    return True
