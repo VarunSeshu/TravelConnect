@@ -62,3 +62,10 @@ def update_user_details(request, user_id):
         )
     logger.info(f"updated_user details , Customer: {customer}")
     return customer
+
+
+def add_new_product(request, user_id):
+    db_repositories = DbRepositories(user_id)
+    product = db_repositories.create_new_product(request)
+    db_repositories.add_product_details(request, product.id)
+    

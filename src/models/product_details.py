@@ -15,7 +15,8 @@ class ProductDetails(Base, ParentModel):
 
     id = Column(BigInteger, primary_key=True)
     product_id = Column(BigInteger, ForeignKey(Products.id), nullable=False)
-    unit = Column(Enum(Units))
+    unit = Column(String(100))
+    quantity = Column(INTEGER)
     actual_price = Column(INTEGER)
     discounted_price = Column(INTEGER)
     created_at = Column(DateTime, default=func.now())

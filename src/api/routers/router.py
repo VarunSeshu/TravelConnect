@@ -5,12 +5,18 @@ from fastapi import APIRouter, Request
 from fastapi.encoders import jsonable_encoder
 
 from src.api.schema.response import LoginResponse, APIStatusResponse
-from src.api.schema.request import SendOTPRequest, VerifyOTPRequest, UpdateUserRequest
+from src.api.schema.request import (
+    AddProductRequest,
+    SendOTPRequest,
+    VerifyOTPRequest,
+    UpdateUserRequest,
+)
 from src.modules.api_manager import (
     login_user,
     send_otp_to_user,
     verify_otp_and_return_user_and_token,
     update_user_details,
+    add_new_product
 )
 
 os.path.join(os.getcwd(), "src")
@@ -51,5 +57,13 @@ def verify_otp(request: VerifyOTPRequest):
 def update_user(request: UpdateUserRequest, auth_request: Request):
     log.info(f"create_user API request : {jsonable_encoder(request)}")
     user_id = auth_request.state.user_id
-    print(f"haaaaaaa {user_id}")
+    print(f"This is the user_id {user_id}")
     return update_user_details(request, user_id)
+
+
+@router.post("/add_product")
+def add_product(request: AddProductRequest, auth_request: Request):
+    log.info(f"add_product API request : {jsonable_encoder(request)}")
+    user_id = auth_request.state.user_id
+    print(f"This is the user_id {user_id}")
+    return add_new_product(request, user_id)

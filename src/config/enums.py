@@ -12,7 +12,9 @@ class OrderStatus(str, Enum):
 class Units(str, Enum):
     kg = UNITS.KG.value
     gram = UNITS.GRAM.value
-    number = UNITS.NUMBER.value
+    piece = UNITS.PIECE.value
+    ml = UNITS.ML.value
+    litre = UNITS.LITRE.value
 
 
 class Roles(str, Enum):

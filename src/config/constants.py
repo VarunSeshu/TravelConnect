@@ -17,7 +17,9 @@ class STATUSES(BaseEnum):
 class UNITS(BaseEnum):
     KG = "kg"
     GRAM = "gram"
-    NUMBER = "number"
+    PIECE = "piece"
+    ML = "ml"
+    LITRE = "litre"
 
 
 class TOKEN:

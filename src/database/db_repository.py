@@ -5,8 +5,11 @@ from src.models.users import Users
 from src.models.customers import Customers
 from src.models.owners import Owners
 from src.models.stores import Stores
+from src.models.products import Products
+from src.models.product_details import ProductDetails
 from src.models.business_categories import BusinessCategories
 import logging
+from sqlalchemy import func
 from src.database.db import db_session
 
 db_session = db_session()
@@ -62,3 +65,20 @@ class DbRepositories:
             owner = Owners.create(user_id=self.user_id, store_id=store_id)
             logger.info(f"Created new customer {owner}")
         return owner
+
+    def create_new_product(self, request):
+        product = db_session.query(Products).filter(func.lower(Products.name) == func.lower(request.product_name), Products.store_id == request.store_id).first()
+        if product:
+            logger.info(f"The product already exists with name {request.product_name}")
+            raise Exception("Product already exists")
+        product = Products(name=request.product_name, brand=request.product_brand, description=request.product_description, store_id = request.store_id)
+        db_session.add(product)
+        db_session.flush()
+        return product
+    
+    def add_product_details(self, request, product_id):
+        for details in request.product_details:
+            product_details = ProductDetails(product_id = product_id, unit = details.unit, actual_price= details.mrp_price,discounted_price= details.discounted_price, quantity = details.quantity)
+            db_session.add(product_details)
+            db_session.flush()
+        return True
